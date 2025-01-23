@@ -18,7 +18,6 @@ export default function Cart() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Cart</h1>
       {cart.length === 0 ? (
         <p className="text-center text-gray-500">
           Your cart is empty. Add some products!
