@@ -2,6 +2,7 @@
 import { useState } from "react";
 import products from "@/mockData/products";
 import ProductCard from "@/components/ProductCard";
+import { toast } from "react-hot-toast";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,6 +14,10 @@ export default function Home() {
       product.price >= priceRange[0] &&
       product.price <= priceRange[1]
   );
+
+  const handleAddToCart = (product) => {
+    toast.success(`Added ${product.name} to cart!`);
+  };
 
   return (
     <div>
@@ -51,7 +56,11 @@ export default function Home() {
       {/* Product Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard
+            key={product.id}
+            product={product}
+            onAddToCart={handleAddToCart}
+          />
         ))}
       </div>
     </div>
