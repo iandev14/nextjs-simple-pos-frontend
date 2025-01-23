@@ -1,14 +1,18 @@
-"use client"; // Enables client-side interactivity
+"use client";
 import { useState } from "react";
-import products from "@/mockData/products";
+import useProducts from "@/hooks/useProducts";
+import useCart from "@/hooks/useCart";
 import ProductCard from "@/components/ProductCard";
 import { toast } from "react-hot-toast";
 
-export default function Home() {
+export default function ProductsPage() {
+  const { productList, loading, error } = useProducts();
+  const { addToCart } = useCart();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [priceRange, setPriceRange] = useState([0, 50]);
 
-  const filteredProducts = products.filter(
+  const filteredProducts = productList.filter(
     (product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       product.price >= priceRange[0] &&
@@ -16,8 +20,12 @@ export default function Home() {
   );
 
   const handleAddToCart = (product) => {
+    addToCart(product);
     toast.success(`Added ${product.name} to cart!`);
   };
+
+  if (loading) return <p>Loading products...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <div>
