@@ -4,6 +4,7 @@ const products = [
   { id: 3, name: "Product C", price: 30 },
   { id: 4, name: "Product D", price: 40 },
   { id: 5, name: "Product E", price: 50 },
+  { id: 6, name: "Product F", price: 60 },
 ];
 
 export default products;
