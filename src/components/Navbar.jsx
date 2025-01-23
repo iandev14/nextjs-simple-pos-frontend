@@ -50,19 +50,19 @@ const Navbar = () => {
 
         {/* Links Container (visible on large screens only) */}
         <div className="hidden lg:flex space-x-8 flex-grow justify-center">
-          <Link href="#" className="hover:underline">
+          <Link href="/" className="hover:underline">
             Home
           </Link>
-          <Link href="#" className="hover:underline">
-            About
+          <Link href="/products" className="hover:underline">
+            Products
           </Link>
-          <Link href="#" className="hover:underline">
-            Services
+          <Link href="/cart" className="hover:underline">
+            Cart
           </Link>
-          <Link href="#" className="hover:underline">
-            Contact
+          <Link href="/checkout" className="hover:underline">
+            Checkout
           </Link>
-          
+
           {/* Login Button moved to this section to align with other links */}
           <Link href="#" className="hover:underline">
             Login
@@ -95,25 +95,23 @@ const Navbar = () => {
         </button>
 
         {/* POS System Title with a line below */}
-        <h1 className="text-2xl font-bold text-black mb-4 pb-4">
-          POS System
-        </h1>
+        <h1 className="text-2xl font-bold text-black mb-4 pb-4">POS System</h1>
 
         <div className="border-t-2 border-gray-300 my-4 w-full" />
 
         {/* Links Container inside Sidebar */}
         <div className="flex flex-col space-y-6 items-start">
-          <Link href="#" className="hover:underline text-black">
+          <Link href="/" className="hover:underline text-black">
             Home
           </Link>
-          <Link href="#" className="hover:underline text-black">
-            About
+          <Link href="/cart" className="hover:underline text-black">
+            Products
           </Link>
-          <Link href="#" className="hover:underline text-black">
-            Services
+          <Link href="/checkout" className="hover:underline text-black">
+            Cart
           </Link>
-          <Link href="#" className="hover:underline text-black">
-            Contact
+          <Link href="/products" className="hover:underline text-black">
+            Checkout
           </Link>
           <Link href="#" className="hover:underline text-black">
             Login
