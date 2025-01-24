@@ -88,7 +88,7 @@ const Navbar = () => {
           </Link>
           <Link
             href="/cart"
-            className="block hover:underline flex items-center"
+            className="hover:underline flex items-center"
             onClick={toggleMenu}
           >
             Cart
