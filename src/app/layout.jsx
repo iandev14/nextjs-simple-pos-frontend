@@ -6,8 +6,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-gray-50 text-gray-900">
-        <Navbar />
-        <Toaster />
+        <Navbar /> {/* Updated Navbar reflects refactored hooks */}
+        <Toaster position="top-right" />
         <main className="max-w-7xl mx-auto p-4">{children}</main>
       </body>
     </html>
