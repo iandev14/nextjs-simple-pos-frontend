@@ -13,10 +13,16 @@ const CheckoutForm = ({ totalAmount, onCheckout }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 p-6 max-w-md mx-auto">
-      <h2 className="text-2xl font-semibold">Checkout</h2>
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-6 bg-white p-6 rounded shadow-md border max-w-lg mx-auto mt-6"
+    >
+      <h2 className="text-2xl font-semibold text-gray-800">Shipping Details</h2>
       <div>
-        <label htmlFor="name" className="block text-sm font-medium">
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-gray-700"
+        >
           Full Name
         </label>
         <input
@@ -24,12 +30,15 @@ const CheckoutForm = ({ totalAmount, onCheckout }) => {
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full mt-1 p-3 border rounded-md focus:ring focus:ring-blue-300 focus:outline-none"
           required
         />
       </div>
       <div>
-        <label htmlFor="email" className="block text-sm font-medium">
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-gray-700"
+        >
           Email
         </label>
         <input
@@ -37,29 +46,34 @@ const CheckoutForm = ({ totalAmount, onCheckout }) => {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full mt-1 p-3 border rounded-md focus:ring focus:ring-blue-300 focus:outline-none"
           required
         />
       </div>
       <div>
-        <label htmlFor="address" className="block text-sm font-medium">
+        <label
+          htmlFor="address"
+          className="block text-sm font-medium text-gray-700"
+        >
           Shipping Address
         </label>
-        <input
-          type="text"
+        <textarea
           id="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full mt-1 p-3 border rounded-md focus:ring focus:ring-blue-300 focus:outline-none"
+          rows="3"
           required
-        />
+        ></textarea>
       </div>
-      <div className="mt-4 text-lg">
-        <p>Total Amount: ${totalAmount}</p>
+      <div className="text-lg text-gray-800">
+        <p>
+          Total Amount: <span className="font-bold">${totalAmount}</span>
+        </p>
       </div>
       <button
         type="submit"
-        className="mt-4 w-full bg-blue-600 text-white py-2 rounded"
+        className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition"
       >
         Complete Order
       </button>
