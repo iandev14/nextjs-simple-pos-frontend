@@ -2,13 +2,12 @@ import { useState } from "react";
 
 const CheckoutForm = ({ totalAmount, onCheckout }) => {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name && email && address) {
-      onCheckout({ name, email, address });
+    if (name && paymentMethod) {
+      onCheckout({ name, paymentMethod });
     }
   };
 
@@ -17,13 +16,13 @@ const CheckoutForm = ({ totalAmount, onCheckout }) => {
       onSubmit={handleSubmit}
       className="space-y-6 bg-white p-6 rounded shadow-md border max-w-lg mx-auto mt-6"
     >
-      <h2 className="text-2xl font-semibold text-gray-800">Shipping Details</h2>
+      <h2 className="text-2xl font-semibold text-gray-800">Checkout</h2>
       <div>
         <label
           htmlFor="name"
           className="block text-sm font-medium text-gray-700"
         >
-          Full Name
+          Name
         </label>
         <input
           type="text"
@@ -36,35 +35,22 @@ const CheckoutForm = ({ totalAmount, onCheckout }) => {
       </div>
       <div>
         <label
-          htmlFor="email"
+          htmlFor="paymentMethod"
           className="block text-sm font-medium text-gray-700"
         >
-          Email
+          Payment Method
         </label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+        <select
+          id="paymentMethod"
+          value={paymentMethod}
+          onChange={(e) => setPaymentMethod(e.target.value)}
           className="w-full mt-1 p-3 border rounded-md focus:ring focus:ring-blue-300 focus:outline-none"
           required
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="address"
-          className="block text-sm font-medium text-gray-700"
         >
-          Shipping Address
-        </label>
-        <textarea
-          id="address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          className="w-full mt-1 p-3 border rounded-md focus:ring focus:ring-blue-300 focus:outline-none"
-          rows="3"
-          required
-        ></textarea>
+          <option value="">Select Payment Method</option>
+          <option value="cash">Cash</option>
+          <option value="card">Card</option>
+        </select>
       </div>
       <div className="text-lg text-gray-800">
         <p>
