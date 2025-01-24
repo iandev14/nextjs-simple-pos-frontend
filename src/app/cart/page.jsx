@@ -1,8 +1,21 @@
 "use client";
+
+import { useState, useEffect } from "react";
 import useCart from "@/hooks/useCart";
 
 export default function Cart() {
   const { cart, updateQuantity, removeFromCart, getTotalPrice } = useCart();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Mark the component as hydrated on the client side
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  // Render a loading state while waiting for hydration
+  if (!isHydrated) {
+    return <p className="text-center text-gray-500">Loading cart...</p>;
+  }
 
   return (
     <div>
