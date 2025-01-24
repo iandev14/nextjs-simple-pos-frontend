@@ -1,10 +1,14 @@
-"use client"; // Add this at the top to mark this component as client-side
+"use client"; // Mark as a client-side component
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import useCart from "@/hooks/useCart";
 
 const Navbar = () => {
-  // State to toggle the mobile menu
+  const { cart } = useCart();
+  const [cartCount, setCartCount] = useState(0);
+  const [isHydrated, setIsHydrated] = useState(false); // Track hydration
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -14,7 +18,6 @@ const Navbar = () => {
 
   const handleResize = () => {
     if (window.innerWidth >= 1024) {
-      // Close the sidebar on large screen size
       setIsMenuOpen(false);
       setIsMobile(false);
     } else {
@@ -22,15 +25,20 @@ const Navbar = () => {
     }
   };
 
-  // Effect to handle window resizing
   useEffect(() => {
-    handleResize(); // Check on initial load
-    window.addEventListener("resize", handleResize); // Add resize event listener
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize); // Cleanup the event listener
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    const count = cart.reduce((total, item) => total + item.quantity, 0);
+    setCartCount(count);
+    setIsHydrated(true); // Mark as hydrated after cart updates
+  }, [cart]);
 
   return (
     <nav className="bg-pink-600 text-white p-4">
@@ -44,7 +52,7 @@ const Navbar = () => {
             onClick={toggleMenu}
             className="text-white text-2xl focus:outline-none"
           >
-            &#9776; {/* Hamburger Icon */}
+            &#9776;
           </button>
         </div>
 
@@ -58,12 +66,15 @@ const Navbar = () => {
           </Link>
           <Link href="/cart" className="hover:underline">
             Cart
+            {isHydrated && cartCount > 0 && (
+              <span className="ml-1 bg-red-500 text-white text-sm rounded-full px-2">
+                {cartCount}
+              </span>
+            )}
           </Link>
           <Link href="/checkout" className="hover:underline">
             Checkout
           </Link>
-
-          {/* Login Button moved to this section to align with other links */}
           <Link href="#" className="hover:underline">
             Login
           </Link>
@@ -80,26 +91,24 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Sidebar (visible only on small screens and when isMenuOpen is true) */}
+      {/* Mobile Menu Sidebar */}
       <div
         className={`fixed top-0 right-0 w-80 h-full bg-white p-6 transition-transform transform ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
-        } rounded-l-3xl text-black`} // Add border-radius to the left
+        } rounded-l-3xl text-black`}
       >
-        {/* Close Button (X) */}
+        {/* Close Button */}
         <button
           onClick={toggleMenu}
           className="text-black text-3xl absolute top-5 right-6"
         >
-          &times; {/* X Icon */}
+          &times;
         </button>
 
-        {/* POS System Title with a line below */}
         <h1 className="text-2xl font-bold text-black mb-4 pb-4">POS System</h1>
 
         <div className="border-t-2 border-gray-300 my-4 w-full" />
 
-        {/* Links Container inside Sidebar */}
         <div className="flex flex-col space-y-6 items-start">
           <Link href="/" className="hover:underline text-black">
             Home
@@ -109,6 +118,11 @@ const Navbar = () => {
           </Link>
           <Link href="/cart" className="hover:underline text-black">
             Cart
+            {isHydrated && cartCount > 0 && (
+              <span className="ml-2 bg-red-500 text-white text-sm rounded-full px-2">
+                {cartCount}
+              </span>
+            )}
           </Link>
           <Link href="/checkout" className="hover:underline text-black">
             Checkout
@@ -119,7 +133,6 @@ const Navbar = () => {
 
           <div className="border-t-2 border-gray-300 my-4 w-full" />
 
-          {/* Sign Up Button in the center */}
           <div className="mt-8 flex justify-center w-full">
             <Link
               href="#"
