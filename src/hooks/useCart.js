@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-// Helper function to get saved cart from localStorage (if available)
+// Helper function to get saved cart from localStorage
 const getSavedCart = () => {
   if (typeof window !== "undefined") {
     const savedCart = localStorage.getItem("cart");
@@ -13,57 +13,73 @@ const useCart = () => {
   const [cart, setCart] = useState(getSavedCart);
 
   // Save cart to localStorage whenever it changes
-  const saveCartToLocalStorage = (newCart) => {
+  useEffect(() => {
     if (typeof window !== "undefined") {
-      localStorage.setItem("cart", JSON.stringify(newCart));
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
-  };
+  }, [cart]);
 
-  // Add product to cart
-  const addToCart = (product) => {
+  // Add product to cart (supporting weight-based items)
+  const addToCart = (product, quantity = 1, weight = null) => {
     const updatedCart = [...cart];
     const productIndex = updatedCart.findIndex(
       (item) => item.id === product.id
     );
 
     if (productIndex >= 0) {
-      // If product is already in cart, increase quantity
-      updatedCart[productIndex].quantity += 1;
+      // If product is already in cart, increase quantity or weight
+      if (weight) {
+        updatedCart[productIndex].weight += weight;
+      } else {
+        updatedCart[productIndex].quantity += quantity;
+      }
     } else {
-      // If product isn't in cart, add it with quantity 1
-      updatedCart.push({ ...product, quantity: 1 });
+      // If product isn't in cart, add it
+      updatedCart.push({
+        ...product,
+        quantity,
+        ...(weight && { weight }), // Add weight if applicable
+      });
     }
 
     setCart(updatedCart);
-    saveCartToLocalStorage(updatedCart);
   };
 
   // Remove product from cart
   const removeFromCart = (productId) => {
     const updatedCart = cart.filter((item) => item.id !== productId);
     setCart(updatedCart);
-    saveCartToLocalStorage(updatedCart);
   };
 
-  // Update product quantity in cart
-  const updateQuantity = (productId, quantity) => {
+  // Update quantity or weight of a product in the cart
+  const updateItem = (productId, newQuantity, newWeight = null) => {
     const updatedCart = cart.map((item) =>
-      item.id === productId ? { ...item, quantity: parseInt(quantity) } : item
+      item.id === productId
+        ? {
+            ...item,
+            quantity: newQuantity,
+            ...(newWeight && { weight: newWeight }),
+          }
+        : item
     );
     setCart(updatedCart);
-    saveCartToLocalStorage(updatedCart);
   };
 
   // Get total price of items in the cart
   const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    return cart.reduce((total, item) => {
+      const itemTotal = item.weight
+        ? item.price * item.weight
+        : item.price * item.quantity;
+      return total + itemTotal;
+    }, 0);
   };
 
   return {
     cart,
     addToCart,
     removeFromCart,
-    updateQuantity,
+    updateItem,
     getTotalPrice,
   };
 };
