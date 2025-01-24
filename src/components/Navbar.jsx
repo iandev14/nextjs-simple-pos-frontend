@@ -48,7 +48,7 @@ const Navbar = () => {
           <Link href="/checkout" className="hover:underline">
             Checkout
           </Link>
-          <Link href="/admin" className="hover:underline">
+          <Link href="/admin/dashboard" className="hover:underline">
             Admin Dashboard
           </Link>
         </div>
@@ -106,7 +106,7 @@ const Navbar = () => {
             Checkout
           </Link>
           <Link
-            href="/admin"
+            href="/admin/dashboard"
             className="block hover:underline"
             onClick={toggleMenu}
           >
