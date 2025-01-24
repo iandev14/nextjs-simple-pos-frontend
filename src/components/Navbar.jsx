@@ -104,13 +104,13 @@ const Navbar = () => {
           <Link href="/" className="hover:underline text-black">
             Home
           </Link>
-          <Link href="/cart" className="hover:underline text-black">
+          <Link href="/products" className="hover:underline text-black">
             Products
           </Link>
-          <Link href="/checkout" className="hover:underline text-black">
+          <Link href="/cart" className="hover:underline text-black">
             Cart
           </Link>
-          <Link href="/products" className="hover:underline text-black">
+          <Link href="/checkout" className="hover:underline text-black">
             Checkout
           </Link>
           <Link href="#" className="hover:underline text-black">
